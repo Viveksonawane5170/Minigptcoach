@@ -1,36 +1,59 @@
 {% extends "base.html" %}
 
-{% block title %}Your Coaching Advice{% endblock %}
+{% block title %}Your {{sport_name}} Mastery Plan{% endblock %}
 
 {% block content %}
 <div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card shadow">
+    <div class="col-lg-10">
+        <div class="card shadow coaching-card">
             <div class="card-header bg-primary text-white">
-                <h4 class="mb-0">Your {{ sport_name }} Coaching Plan</h4>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h3 class="mb-0">
+                            <i class="bi 
+                            {% if sport_name == 'Running' %}bi-speedometer2
+                            {% elif sport_name == 'Swimming' %}bi-water
+                            {% elif sport_name == 'Cycling' %}bi-bicycle
+                            {% else %}bi-activity{% endif %}"></i>
+                            {{sport_name}} Mastery Plan
+                        </h3>
+                        <p class="mb-0">For {{level}} athletes focusing on: {{goals|join(', ')}}</p>
+                    </div>
+                    <span class="badge bg-light text-dark fs-6">
+                        {% if level == 'beginner' %}Starting Strong
+                        {% elif level == 'intermediate' %}Building Excellence
+                        {% else %}Elite Performance{% endif %}
+                    </span>
+                </div>
             </div>
+            
             <div class="card-body coaching-content">
                 {{ prompt|safe }}
                 
-                <form method="POST" action="{{ url_for('feedback') }}" class="mt-4">
-                    <input type="hidden" name="profile_id" value="{{ profile_id }}">
-                    <div class="text-center">
-                        <p class="h5">Was this advice helpful?</p>
-                        <div class="d-flex justify-content-center gap-3 mt-3">
-                            <button type="submit" name="feedback" value="positive" class="btn btn-success btn-lg">
-                                <i class="bi bi-hand-thumbs-up"></i> Yes, very helpful!
-                            </button>
-                            <button type="submit" name="feedback" value="negative" class="btn btn-danger btn-lg">
-                                <i class="bi bi-hand-thumbs-down"></i> Could be better
-                            </button>
-                        </div>
+                <div class="coaching-footer mt-5">
+                    <div class="feedback-section p-4 bg-light rounded">
+                        <h5 class="text-center mb-4">How valuable was this plan?</h5>
+                        <form method="POST" action="{{ url_for('feedback') }}">
+                            <input type="hidden" name="profile_id" value="{{ profile_id }}">
+                            <div class="d-flex justify-content-center flex-wrap gap-3">
+                                <button type="submit" name="feedback" value="excellent" class="btn btn-success btn-lg">
+                                    <i class="bi bi-stars"></i> Extremely Valuable
+                                </button>
+                                <button type="submit" name="feedback" value="good" class="btn btn-info btn-lg">
+                                    <i class="bi bi-check-circle"></i> Quite Helpful
+                                </button>
+                                <button type="submit" name="feedback" value="fair" class="btn btn-warning btn-lg">
+                                    <i class="bi bi-arrow-repeat"></i> Needs Adjustment
+                                </button>
+                            </div>
+                        </form>
                     </div>
-                </form>
-                
-                <div class="text-center mt-5">
-                    <a href="{{ url_for('index') }}" class="btn btn-outline-primary">
-                        <i class="bi bi-arrow-repeat"></i> Generate New Advice
-                    </a>
+                    
+                    <div class="text-center mt-5">
+                        <a href="{{ url_for('index') }}" class="btn btn-primary btn-lg">
+                            <i class="bi bi-arrow-repeat"></i> Create New Plan
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>

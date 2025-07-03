@@ -489,3 +489,166 @@ select:focus, input:focus, textarea:focus {
     padding: 0.75rem 1.5rem;
     font-size: 1.1rem;
 }
+/* Add these to your existing styles */
+.coaching-content {
+    font-size: 1.1rem;
+    line-height: 1.8;
+}
+
+.coaching-content h4 {
+    color: #2c3e50;
+    margin-top: 2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.coaching-content strong {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.coaching-intro {
+    background-color: #f8f9fa;
+    padding: 1.5rem;
+    border-radius: 8px;
+    border-left: 4px solid var(--secondary-color);
+}
+
+/* Sport-specific styling */
+.coaching-sport-running {
+    border-left: 4px solid #4a6fa5;
+}
+.coaching-sport-swimming {
+    border-left: 4px solid #4cb8c4;
+}
+.coaching-sport-cycling {
+    border-left: 4px solid #ff7e5f;
+}
+.coaching-sport-weight_training {
+    border-left: 4px solid #6c757d;
+}
+
+/* Level-specific styling */
+.coaching-level-beginner {
+    background-color: #f8f9fa;
+}
+.coaching-level-intermediate {
+    background-color: #e9ecef;
+}
+.coaching-level-advanced {
+    background-color: #dee2e6;
+}
+
+/* Feedback buttons */
+.btn-group-lg .btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+    margin: 0 5px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .btn-group {
+        flex-direction: column;
+    }
+    .btn-group-lg .btn {
+        margin: 5px 0;
+        width: 100%;
+    }
+}
+/* Coaching Plan Styles */
+.coaching-content {
+    font-size: 1.15rem;
+    line-height: 1.9;
+}
+
+.coaching-content strong {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.coaching-content h4 {
+    color: #2c3e50;
+    margin-top: 2.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.coaching-card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+/* Sport-specific styling */
+.running-plan {
+    border-left: 6px solid #4a6fa5;
+    background-color: rgba(74, 111, 165, 0.03);
+}
+
+.swimming-plan {
+    border-left: 6px solid #4cb8c4;
+    background-color: rgba(76, 184, 196, 0.03);
+}
+
+.cycling-plan {
+    border-left: 6px solid #ff7e5f;
+    background-color: rgba(255, 126, 95, 0.03);
+}
+
+.weight_training-plan {
+    border-left: 6px solid #6c757d;
+    background-color: rgba(108, 117, 125, 0.03);
+}
+
+/* Level-specific styling */
+.beginner-level {
+    background-image: linear-gradient(to bottom, rgba(248, 249, 250, 0.8), rgba(248, 249, 250, 0.95));
+}
+
+.intermediate-level {
+    background-image: linear-gradient(to bottom, rgba(233, 236, 239, 0.8), rgba(233, 236, 239, 0.95));
+}
+
+.advanced-level {
+    background-image: linear-gradient(to bottom, rgba(222, 226, 230, 0.8), rgba(222, 226, 230, 0.95));
+}
+
+/* List formatting */
+.coaching-content ol, 
+.coaching-content ul {
+    padding-left: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.coaching-content li {
+    margin-bottom: 0.75rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .coaching-content {
+        font-size: 1.05rem;
+    }
+    
+    .feedback-section .btn {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+}
+
+/* Animation for plan sections */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.coaching-plan > p,
+.coaching-plan > h4 {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.coaching-plan > p:nth-child(1) { animation-delay: 0.1s; }
+.coaching-plan > p:nth-child(2) { animation-delay: 0.3s; }
+.coaching-plan > h4:nth-child(3) { animation-delay: 0.5s; }
+.coaching-plan > p:nth-child(4) { animation-delay: 0.7s; }
