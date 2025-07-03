@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+
+{% block title %}Your Coaching Advice{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Your {{ sport_name }} Coaching</h4>
+            </div>
+            <div class="card-body">
+                <div class="coaching-card p-4 mb-4">
+                    <p class="lead">{{ prompt }}</p>
+                </div>
+
+                <form method="POST" action="{{ url_for('feedback') }}">
+                    <input type="hidden" name="profile_id" value="{{ profile_id }}">
+                    <p class="text-center mb-3">Was this advice helpful?</p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <button type="submit" name="feedback" value="positive" class="btn btn-success">
+                            <i class="bi bi-hand-thumbs-up"></i> Yes
+                        </button>
+                        <button type="submit" name="feedback" value="negative" class="btn btn-danger">
+                            <i class="bi bi-hand-thumbs-down"></i> No
+                        </button>
+                    </div>
+                </form>
+
+                <div class="text-center mt-4">
+                    <a href="{{ url_for('index') }}" class="btn btn-outline-primary">
+                        <i class="bi bi-arrow-left"></i> Create New Advice
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

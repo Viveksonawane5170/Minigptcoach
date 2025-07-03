@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+
+{% block title %}Get Coaching Advice{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h4 class="mb-0">Your Training Profile</h4>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="sport" class="form-label">Primary Sport *</label>
+                        <select class="form-select" name="sport" id="sport" required>
+                            <option value="" selected disabled>Select your sport</option>
+                            {% for key, value in sports.items() %}
+                                <option value="{{ key }}">{{ value }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Experience Level *</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="level" id="beginner" value="beginner" required>
+                            <label class="form-check-label" for="beginner">Beginner</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="level" id="intermediate" value="intermediate">
+                            <label class="form-check-label" for="intermediate">Intermediate</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="level" id="advanced" value="advanced">
+                            <label class="form-check-label" for="advanced">Advanced</label>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label">Training Goals</label>
+                        {% for goal in goals %}
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="goals" id="{{ goal }}" value="{{ goal }}">
+                                <label class="form-check-label" for="{{ goal }}">{{ goal|capitalize }}</label>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="motivational_style" class="form-label">Motivation Style</label>
+                        <select class="form-select" name="motivational_style" id="motivational_style">
+                            <option value="encouraging">Encouraging</option>
+                            <option value="tough_love">Tough Love</option>
+                            <option value="technical">Technical</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="length" class="form-label">Advice Length</label>
+                        <select class="form-select" name="length" id="length">
+                            <option value="short">Short (1-2 sentences)</option>
+                            <option value="medium" selected>Medium (2-3 sentences)</option>
+                            <option value="detailed">Detailed (3-5 sentences)</option>
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Get Coaching Advice</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
