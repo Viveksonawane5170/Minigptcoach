@@ -9,19 +9,9 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'dev-secret-key')
 
-# Application Configuration
-SPORTS = {
-    'running': 'Running',
-    'swimming': 'Swimming',
-    'cycling': 'Cycling',
-    'weight_training': 'Weight Training'
-}
 
-GOALS = [
-    'endurance', 'speed', 'strength',
-    'flexibility', 'technique', 'recovery'
-]
 
+# Update the index route to pass empty dicts:
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
@@ -55,17 +45,18 @@ def index():
             prompt = generate_coaching_prompt(user_profile)
             
             return render_template('results.html',
-                                prompt=prompt,
-                                profile_id=profile_id,
-                                sport_name=SPORTS.get(user_profile['sport']))
+                       prompt=prompt,
+                       profile_id=profile_id,
+                       sport_name=user_profile['sport'].replace('_', ' ').title())
+
         
         except Exception as e:
             flash(f'Error generating prompt: {str(e)}', 'error')
             return redirect(url_for('index'))
     
     return render_template('index.html',
-                         sports=SPORTS,
-                         goals=GOALS)
+                         sports={},  # Will be handled in template
+                         goals=[])   # Will be handled in template
 
 @app.route('/feedback', methods=['POST'])
 def feedback():

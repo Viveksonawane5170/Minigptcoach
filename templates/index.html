@@ -1,74 +1,219 @@
 {% extends "base.html" %}
 
-{% block title %}Get Coaching Advice{% endblock %}
+{% block title %}AI Sports Coach - Personalized Training Plans{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card shadow">
-            <div class="card-header bg-primary text-white">
-                <h4 class="mb-0">Your Training Profile</h4>
-            </div>
-            <div class="card-body">
-                <form method="POST">
-                    <div class="mb-3">
-                        <label for="sport" class="form-label">Primary Sport *</label>
-                        <select class="form-select" name="sport" id="sport" required>
-                            <option value="" selected disabled>Select your sport</option>
-                            {% for key, value in sports.items() %}
-                                <option value="{{ key }}">{{ value }}</option>
-                            {% endfor %}
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Experience Level *</label>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="level" id="beginner" value="beginner" required>
-                            <label class="form-check-label" for="beginner">Beginner</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="level" id="intermediate" value="intermediate">
-                            <label class="form-check-label" for="intermediate">Intermediate</label>
-                        </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="level" id="advanced" value="advanced">
-                            <label class="form-check-label" for="advanced">Advanced</label>
-                        </div>
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label">Training Goals</label>
-                        {% for goal in goals %}
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" name="goals" id="{{ goal }}" value="{{ goal }}">
-                                <label class="form-check-label" for="{{ goal }}">{{ goal|capitalize }}</label>
-                            </div>
-                        {% endfor %}
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="motivational_style" class="form-label">Motivation Style</label>
-                        <select class="form-select" name="motivational_style" id="motivational_style">
-                            <option value="encouraging">Encouraging</option>
-                            <option value="tough_love">Tough Love</option>
-                            <option value="technical">Technical</option>
-                        </select>
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="length" class="form-label">Advice Length</label>
-                        <select class="form-select" name="length" id="length">
-                            <option value="short">Short (1-2 sentences)</option>
-                            <option value="medium" selected>Medium (2-3 sentences)</option>
-                            <option value="detailed">Detailed (3-5 sentences)</option>
-                        </select>
-                    </div>
-
-                    <button type="submit" class="btn btn-primary w-100">Get Coaching Advice</button>
-                </form>
-            </div>
+<div class="app-main">
+    <div class="form-container">
+        <div class="form-header">
+            <h2><i class="bi bi-activity me-2"></i> Create Your Custom Training Plan</h2>
+            <p>Get AI-powered coaching tailored to your sport, level, and goals</p>
         </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="flash-messages">
+                    {% for category, message in messages %}
+                        <div class="flash flash-{{ category }}">
+                            <div class="flash-icon">
+                                {% if category == 'success' %}
+                                    <i class="bi bi-check-circle"></i>
+                                {% elif category == 'error' %}
+                                    <i class="bi bi-exclamation-triangle"></i>
+                                {% else %}
+                                    <i class="bi bi-info-circle"></i>
+                                {% endif %}
+                            </div>
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <!-- Sport Selection -->
+            <div class="form-section">
+                <h3><i class="bi bi-trophy"></i> Primary Sport</h3>
+                <div class="form-group">
+                    <label for="sport"><i class="bi bi-heart-pulse"></i> Which sport do you want coaching for? *</label>
+                    <select name="sport" id="sport" required>
+                        <option value="" disabled selected>Select your sport</option>
+                        <option value="running">Running</option>
+                        <option value="swimming">Swimming</option>
+                        <option value="cycling">Cycling</option>
+                        <option value="weight_training">Weight Training</option>
+                        <option value="yoga">Yoga</option>
+                        <option value="basketball">Basketball</option>
+                        <option value="soccer">Soccer</option>
+                        <option value="tennis">Tennis</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Experience Level -->
+            <div class="form-section">
+                <h3><i class="bi bi-graph-up"></i> Experience Level</h3>
+                <div class="form-group">
+                    <label><i class="bi bi-person-badge"></i> How would you describe your current level? *</label>
+                    <div class="radio-group">
+                        <div class="radio-option">
+                            <input type="radio" name="level" id="beginner" value="beginner" required>
+                            <label for="beginner" class="radio-label">
+                                <i class="bi bi-1-circle"></i> Beginner
+                            </label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="level" id="intermediate" value="intermediate">
+                            <label for="intermediate" class="radio-label">
+                                <i class="bi bi-2-circle"></i> Intermediate
+                            </label>
+                        </div>
+                        <div class="radio-option">
+                            <input type="radio" name="level" id="advanced" value="advanced">
+                            <label for="advanced" class="radio-label">
+                                <i class="bi bi-3-circle"></i> Advanced
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Training Goals -->
+            <div class="form-section">
+                <h3><i class="bi bi-bullseye"></i> Training Goals</h3>
+                <div class="form-group">
+                    <label><i class="bi bi-check2-square"></i> What are your primary objectives? (Select all that apply)</label>
+                    <div class="checkbox-grid">
+                        <div class="checkbox-option">
+                            <input type="checkbox" name="goals" id="endurance" value="endurance">
+                            <label for="endurance" class="checkbox-label">
+                                <i class="bi bi-lightning"></i> Endurance
+                            </label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" name="goals" id="speed" value="speed">
+                            <label for="speed" class="checkbox-label">
+                                <i class="bi bi-speedometer"></i> Speed
+                            </label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" name="goals" id="strength" value="strength">
+                            <label for="strength" class="checkbox-label">
+                                <i class="bi bi-activity"></i> Strength
+                            </label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" name="goals" id="flexibility" value="flexibility">
+                            <label for="flexibility" class="checkbox-label">
+                                <i class="bi bi-bounding-box"></i> Flexibility
+                            </label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" name="goals" id="technique" value="technique">
+                            <label for="technique" class="checkbox-label">
+                                <i class="bi bi-gear"></i> Technique
+                            </label>
+                        </div>
+                        <div class="checkbox-option">
+                            <input type="checkbox" name="goals" id="recovery" value="recovery">
+                            <label for="recovery" class="checkbox-label">
+                                <i class="bi bi-cloud-moon"></i> Recovery
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Coaching Preferences -->
+            <div class="form-section">
+                <h3><i class="bi bi-sliders"></i> Coaching Preferences</h3>
+                <div class="form-group">
+                    <label for="motivational_style"><i class="bi bi-chat-left-text"></i> Preferred coaching style</label>
+                    <select name="motivational_style" id="motivational_style">
+                        <option value="encouraging">Encouraging & Supportive</option>
+                        <option value="technical">Technical & Detailed</option>
+                        <option value="tough_love">Tough Love & Challenging</option>
+                        <option value="balanced">Balanced Approach</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="length"><i class="bi bi-text-paragraph"></i> Plan detail level</label>
+                    <select name="length" id="length">
+                        <option value="short">Short Summary</option>
+                        <option value="medium" selected>Moderate Detail</option>
+                        <option value="detailed">Comprehensive Plan</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn">
+                <i class="bi bi-magic me-2"></i> Generate My Custom Plan
+            </button>
+        </form>
     </div>
 </div>
+
+<!-- Bootstrap Icons -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+
+<!-- Form Validation Script -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    
+    form.addEventListener('submit', function(event) {
+        // Validate required fields
+        const sport = document.getElementById('sport');
+        const level = document.querySelector('input[name="level"]:checked');
+        
+        if (!sport.value || !level) {
+            event.preventDefault();
+            
+            if (!sport.value) {
+                sport.style.borderColor = 'var(--error-color)';
+            }
+            
+            if (!level) {
+                document.querySelectorAll('.radio-label').forEach(label => {
+                    label.style.borderColor = 'var(--error-color)';
+                });
+            }
+            
+            // Show error message
+            const flashDiv = document.createElement('div');
+            flashDiv.className = 'flash flash-error';
+            flashDiv.innerHTML = `
+                <div class="flash-icon"><i class="bi bi-exclamation-triangle"></i></div>
+                Please fill all required fields
+            `;
+            
+            const flashContainer = document.querySelector('.flash-messages') || document.createElement('div');
+            if (!document.querySelector('.flash-messages')) {
+                flashContainer.className = 'flash-messages';
+                form.prepend(flashContainer);
+            }
+            
+            flashContainer.prepend(flashDiv);
+            
+            // Scroll to error
+            flashDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    });
+    
+    // Reset error states on change
+    document.getElementById('sport').addEventListener('change', function() {
+        this.style.borderColor = '';
+    });
+    
+    document.querySelectorAll('input[name="level"]').forEach(radio => {
+        radio.addEventListener('change', function() {
+            document.querySelectorAll('.radio-label').forEach(label => {
+                label.style.borderColor = '';
+            });
+        });
+    });
+});
+</script>
 {% endblock %}

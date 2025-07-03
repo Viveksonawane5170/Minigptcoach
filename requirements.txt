@@ -2,7 +2,5 @@ flask==2.3.2
 python-dotenv==1.0.0
 firebase-admin==6.1.0
 google-cloud-firestore==2.11.1
-langchain==0.0.248
 google-generativeai==0.3.0
-langchain-community==0.0.1  # Add this new package
 gunicorn==20.1.0
