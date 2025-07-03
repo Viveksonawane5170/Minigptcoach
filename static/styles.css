@@ -459,3 +459,33 @@ select:focus, input:focus, textarea:focus {
         font-size: 1.1rem;
     }
 }
+/* Add to your existing styles */
+.coaching-content {
+    line-height: 1.8;
+    font-size: 1.1rem;
+}
+
+.coaching-content h4 {
+    color: #2c3e50;
+    margin-top: 1.5rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.3rem;
+    border-bottom: 2px solid #4a6fa5;
+}
+
+.coaching-content p {
+    margin-bottom: 1.5rem;
+}
+
+.coaching-card {
+    background-color: #f8fafc;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.1rem;
+}
