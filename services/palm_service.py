@@ -38,10 +38,13 @@ def generate_coaching_prompt(user_profile):
         return generate_fallback_response(user_profile)
 
 def format_response(response, user_profile):
-    """Format the Gemini response with HTML"""
+    """Format the Gemini response with HTML and clean up unwanted characters"""
+    # Remove asterisks and other unwanted markdown
+    cleaned_response = response.replace('*', '')
+    
     formatted = f"""
     <div class='coaching-plan {user_profile["sport"]}-plan {user_profile["level"]}-level'>
-        <p>{response.replace('\n', '</p><p>')}</p>
+        <p>{cleaned_response.replace('\n', '</p><p>')}</p>
     </div>
     """
     return formatted
