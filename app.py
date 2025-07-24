@@ -9,8 +9,6 @@ load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.getenv('FLASK_SECRET_KEY', 'dev-secret-key')
 
-
-
 # Update the index route to pass empty dicts:
 @app.route('/', methods=['GET', 'POST'])
 def index():

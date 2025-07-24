@@ -1,412 +1,918 @@
 {% extends "base.html" %}
 
-{% block title %}AI Sports Coach - Personalized Training Plans{% endblock %}
+{% block title %}Elite Performance Training Platform{% endblock %}
 
 {% block content %}
-<div class="app-main">
-    <div class="athlete-hero">
+<style>
+    /* Hero Section */
+    .hero-section {
+        background: linear-gradient(135deg, #d60b0b 0%, #764ba2 100%);
+        color: white;
+        padding: 4rem 0;
+        margin: -2rem -15px 3rem -15px;
+        position: relative;
+        overflow: hidden;
+        border-radius: 0 0 2rem 2rem;
+    }
+
+    .hero-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: 
+            radial-gradient(circle at 20% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+            radial-gradient(circle at 80% 80%, rgba(0, 242, 254, 0.1) 0%, transparent 50%);
+        animation: heroGlow 8s ease-in-out infinite;
+    }
+
+    @keyframes heroGlow {
+        0%, 100% { opacity: 0.3; }
+        50% { opacity: 0.7; }
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+        text-align: center;
+    }
+
+    .hero-title {
+        font-family: 'Poppins', sans-serif;
+        font-size: 3.5rem;
+        font-weight: 800;
+        margin-bottom: 1rem;
+        background: linear-gradient(45deg, #fff, #f0f0f0);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: titlePulse 3s ease-in-out infinite;
+    }
+
+    @keyframes titlePulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.02); }
+    }
+
+    .hero-subtitle {
+        font-size: 1.3rem;
+        opacity: 0.9;
+        margin-bottom: 2rem;
+        font-weight: 300;
+    }
+
+    .hero-stats {
+        display: flex;
+        justify-content: center;
+        gap: 3rem;
+        margin-top: 2rem;
+    }
+
+    .hero-stat {
+        text-align: center;
+    }
+
+    .hero-stat-number {
+        font-size: 2rem;
+        font-weight: 700;
+        display: block;
+        color: #00f2fe;
+    }
+
+    .hero-stat-label {
+        font-size: 0.9rem;
+        opacity: 0.8;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    /* Form Container */
+    .form-container {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 2rem;
+        padding: 3rem;
+        box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .form-container::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, #667eea, #f5576c, #00f2fe, #38f9d7);
+        background-size: 400% 400%;
+        animation: gradientShift 6s ease infinite;
+    }
+
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    .form-header {
+        text-align: center;
+        margin-bottom: 3rem;
+    }
+
+    .form-header-icon {
+        font-size: 3rem;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 1rem;
+        animation: iconFloat 3s ease-in-out infinite;
+    }
+
+    @keyframes iconFloat {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-5px); }
+    }
+
+    .form-header h2 {
+        color: #232526;
+        font-weight: 700;
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .form-subtitle {
+        color: #666;
+        font-size: 1.1rem;
+    }
+
+    /* Form Sections */
+    .form-section {
+        margin-bottom: 2.5rem;
+        padding: 2rem;
+        background: rgba(248, 250, 252, 0.5);
+        border-radius: 1.5rem;
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        transition: all 0.3s ease;
+    }
+
+    .form-section:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .section-header {
+        display: flex;
+        align-items: center;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 2px solid rgba(102, 126, 234, 0.1);
+    }
+
+    .section-header i {
+        font-size: 1.5rem;
+        margin-right: 1rem;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    .section-header h3 {
+        font-weight: 600;
+        color: #232526;
+        margin: 0;
+    }
+
+    /* Form Fields */
+    .form-row {
+        display: flex;
+        gap: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+        flex: 1;
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: flex;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        font-weight: 600;
+        color: #444;
+    }
+
+    .form-group label i {
+        margin-right: 0.5rem;
+        color: #667eea;
+        font-size: 1.1rem;
+    }
+
+    input, select, textarea {
+        width: 100%;
+        padding: 1rem;
+        border: 2px solid rgba(102, 126, 234, 0.1);
+        border-radius: 1rem;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: rgba(255, 255, 255, 0.8);
+    }
+
+    input:focus, select:focus, textarea:focus {
+        outline: none;
+        border-color: #667eea;
+        box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        transform: translateY(-1px);
+    }
+
+    /* Radio and Checkbox Styling */
+    .radio-group {
+        display: grid;
+        gap: 1rem;
+    }
+
+    .performance-levels .radio-option {
+        margin-bottom: 1rem;
+    }
+
+    .radio-label {
+        display: flex;
+        align-items: center;
+        padding: 1.5rem;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(248, 250, 252, 0.9));
+        border: 2px solid rgba(102, 126, 234, 0.1);
+        border-radius: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .radio-label::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        opacity: 0;
+        transition: all 0.3s ease;
+        z-index: -1;
+    }
+
+    .radio-label:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.2);
+    }
+
+    input[type="radio"]:checked + .radio-label {
+        border-color: #667eea;
+        color: white;
+    }
+
+    input[type="radio"]:checked + .radio-label::before {
+        opacity: 1;
+    }
+
+    .level-icon {
+        font-size: 2rem;
+        margin-right: 1rem;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    input[type="radio"]:checked + .radio-label .level-icon {
+        color: white;
+        -webkit-text-fill-color: white;
+    }
+
+    .level-content {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .level-title {
+        font-weight: 600;
+        font-size: 1.1rem;
+        margin-bottom: 0.2rem;
+    }
+
+    .level-desc {
+        font-size: 0.9rem;
+        opacity: 0.8;
+    }
+
+    /* Checkbox Grid */
+    .checkbox-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 1rem;
+    }
+
+    .checkbox-label {
+        display: flex;
+        align-items: center;
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.8);
+        border: 2px solid rgba(102, 126, 234, 0.1);
+        border-radius: 1rem;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .checkbox-label::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #4facfe, #00f2fe);
+        opacity: 0;
+        transition: all 0.3s ease;
+        z-index: -1;
+    }
+
+    .checkbox-label:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(75, 172, 254, 0.2);
+    }
+
+    input[type="checkbox"]:checked + .checkbox-label {
+        border-color: #4facfe;
+        color: white;
+    }
+
+    input[type="checkbox"]:checked + .checkbox-label::before {
+        opacity: 1;
+    }
+
+    .checkbox-label i {
+        margin-right: 0.75rem;
+        font-size: 1.3rem;
+        color: #667eea;
+    }
+
+    input[type="checkbox"]:checked + .checkbox-label i {
+        color: white;
+    }
+
+    /* Submit Button */
+    .form-actions {
+        text-align: center;
+        margin-top: 3rem;
+    }
+
+    .submit-btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 1.25rem 3rem;
+        font-size: 1.2rem;
+        font-weight: 700;
+        border-radius: 2rem;
+        cursor: pointer;
+        transition: all 0.4s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+    }
+
+    .submit-btn::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+        transition: all 0.6s;
+    }
+
+    .submit-btn:hover::before {
+        left: 100%;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+    }
+
+    .form-note {
+        margin-top: 1.5rem;
+        color: #666;
+        font-size: 0.9rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .form-note i {
+        margin-right: 0.5rem;
+        color: #38f9d7;
+    }
+
+    /* Error States */
+    .error-highlight {
+        border-color: #f5576c !important;
+        box-shadow: 0 0 0 3px rgba(245, 87, 108, 0.2) !important;
+        animation: shake 0.5s ease-in-out;
+    }
+
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-5px); }
+        75% { transform: translateX(5px); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .hero-title {
+            font-size: 2.5rem;
+        }
+
+        .hero-stats {
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .form-container {
+            padding: 2rem 1.5rem;
+            margin: 0 -15px;
+            border-radius: 2rem 2rem 0 0;
+        }
+
+        .form-row {
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .checkbox-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .performance-levels .radio-label {
+            padding: 1rem;
+        }
+
+        .level-icon {
+            font-size: 1.5rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .hero-title {
+            font-size: 2rem;
+        }
+
+        .form-section {
+            padding: 1.5rem;
+        }
+    }
+
+    /* Loading Animation */
+    .submit-btn.loading {
+        pointer-events: none;
+    }
+
+    .submit-btn.loading::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 20px;
+        height: 20px;
+        margin: -10px 0 0 -10px;
+        border: 2px solid rgba(255, 255, 255, 0.3);
+        border-top: 2px solid white;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+</style>
+
+<!-- Hero Section -->
+<div class="hero-section">
+    <div class="container">
         <div class="hero-content">
-            <h1><i class="bi bi-speedometer2"></i> Elite Performance Training</h1>
-            <p class="subtitle">AI-powered coaching designed for competitive athletes</p>
+            <h1 class="hero-title">
+                <i class="bi bi-lightning-charge-fill me-3"></i>
+                Elite Performance Training
+            </h1>
+            <p class="hero-subtitle">AI-powered coaching designed for competitive athletes seeking excellence</p>
+            
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <span class="hero-stat-number">10K+</span>
+                    <span class="hero-stat-label">Athletes Trained</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">95%</span>
+                    <span class="hero-stat-label">Performance Boost</span>
+                </div>
+                <div class="hero-stat">
+                    <span class="hero-stat-number">24/7</span>
+                    <span class="hero-stat-label">AI Coach Support</span>
+                </div>
+            </div>
         </div>
-    </div>
-
-    <div class="form-container athlete-form">
-        <div class="form-header">
-            <div class="header-icon">
-                <i class="bi bi-clipboard2-pulse"></i>
-            </div>
-            <h2>Create Your Performance Plan</h2>
-            <p class="form-subtitle">Get a customized training regimen tailored to your sport, competition level, and physiological metrics</p>
-        </div>
-
-        {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-                <div class="flash-messages">
-                    {% for category, message in messages %}
-                        <div class="flash flash-{{ category }}">
-                            <div class="flash-icon">
-                                {% if category == 'success' %}
-                                    <i class="bi bi-check-circle"></i>
-                                {% elif category == 'error' %}
-                                    <i class="bi bi-exclamation-triangle"></i>
-                                {% else %}
-                                    <i class="bi bi-info-circle"></i>
-                                {% endif %}
-                            </div>
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endif %}
-        {% endwith %}
-
-        <form method="POST" class="athlete-form-content">
-            <!-- Athlete Profile Section -->
-            <div class="form-section athlete-profile">
-                <div class="section-header">
-                    <i class="bi bi-person-vcard"></i>
-                    <h3>Athlete Profile</h3>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="name"><i class="bi bi-person"></i> Full Name</label>
-                        <input type="text" name="name" id="name" placeholder="First Last">
-                    </div>
-                    <div class="form-group">
-                        <label for="age"><i class="bi bi-calendar"></i> Age</label>
-                        <input type="number" name="age" id="age" min="12" max="99" placeholder="Years">
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="gender"><i class="bi bi-gender-ambiguous"></i> Gender</label>
-                        <select name="gender" id="gender">
-                            <option value="" disabled selected>Select</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
-                            <option value="other">Other</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="weight"><i class="bi bi-speedometer"></i> Weight (kg)</label>
-                        <input type="number" name="weight" id="weight" min="30" max="200" placeholder="kg">
-                    </div>
-                </div>
-            </div>
-
-            <!-- Sport Selection -->
-            <div class="form-section">
-                <div class="section-header">
-                    <i class="bi bi-trophy"></i>
-                    <h3>Sport Specialization</h3>
-                </div>
-                <div class="form-group">
-                    <label for="sport"><i class="bi bi-heart-pulse"></i> Primary Sport *</label>
-                    <select name="sport" id="sport" required class="athlete-select">
-                        <option value="" disabled selected>Select your sport</option>
-                        <option value="running">Running (Track/XC)</option>
-                        <option value="swimming">Swimming</option>
-                        <option value="cycling">Cycling</option>
-                        <option value="weight_training">Weight Training</option>
-                        <option value="triathlon">Triathlon</option>
-                        <option value="basketball">Basketball</option>
-                        <option value="soccer">Soccer</option>
-                        <option value="tennis">Tennis</option>
-                        <option value="volleyball">Volleyball</option>
-                        <option value="gymnastics">Gymnastics</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="position"><i class="bi bi-geo-alt"></i> Position/Role (if applicable)</label>
-                    <input type="text" name="position" id="position" placeholder="e.g., Point Guard, Midfielder, Sprinter">
-                </div>
-            </div>
-
-            <!-- Performance Level -->
-            <div class="form-section">
-                <div class="section-header">
-                    <i class="bi bi-graph-up-arrow"></i>
-                    <h3>Performance Level</h3>
-                </div>
-                <div class="form-group">
-                    <label><i class="bi bi-bar-chart-steps"></i> Current Competition Level *</label>
-                    <div class="radio-group performance-levels">
-                        <div class="radio-option">
-                            <input type="radio" name="level" id="beginner" value="beginner" required>
-                            <label for="beginner" class="radio-label">
-                                <div class="level-icon"><i class="bi bi-1-circle"></i></div>
-                                <div class="level-content">
-                                    <span class="level-title">High School</span>
-                                    <span class="level-desc">Competing at school/club level</span>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" name="level" id="intermediate" value="intermediate">
-                            <label for="intermediate" class="radio-label">
-                                <div class="level-icon"><i class="bi bi-2-circle"></i></div>
-                                <div class="level-content">
-                                    <span class="level-title">Collegiate</span>
-                                    <span class="level-desc">Competing at university level</span>
-                                </div>
-                            </label>
-                        </div>
-                        <div class="radio-option">
-                            <input type="radio" name="level" id="advanced" value="advanced">
-                            <label for="advanced" class="radio-label">
-                                <div class="level-icon"><i class="bi bi-3-circle"></i></div>
-                                <div class="level-content">
-                                    <span class="level-title">Elite</span>
-                                    <span class="level-desc">National/International competition</span>
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Training Metrics -->
-            <div class="form-section">
-                <div class="section-header">
-                    <i class="bi bi-clipboard2-data"></i>
-                    <h3>Performance Metrics</h3>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="training_hours"><i class="bi bi-clock-history"></i> Weekly Training Hours</label>
-                        <input type="number" name="training_hours" id="training_hours" min="1" max="40" placeholder="Hours per week">
-                    </div>
-                    <div class="form-group">
-                        <label for="rest_days"><i class="bi bi-cloud-moon"></i> Rest Days Per Week</label>
-                        <input type="number" name="rest_days" id="rest_days" min="0" max="7" placeholder="Days">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="performance_goal"><i class="bi bi-bullseye"></i> Specific Performance Goal</label>
-                    <textarea name="performance_goal" id="performance_goal" rows="2" placeholder="e.g., Run 5k under 18 minutes, Increase vertical jump by 4 inches..."></textarea>
-                </div>
-            </div>
-
-            <!-- Training Goals -->
-            <div class="form-section">
-                <div class="section-header">
-                    <i class="bi bi-bullseye"></i>
-                    <h3>Training Priorities</h3>
-                </div>
-                <div class="form-group">
-                    <label><i class="bi bi-check2-square"></i> Select your focus areas (Select 2-3) *</label>
-                    <div class="checkbox-grid performance-goals">
-                        <div class="checkbox-option">
-                            <input type="checkbox" name="goals" id="endurance" value="endurance">
-                            <label for="endurance" class="checkbox-label">
-                                <i class="bi bi-lightning"></i>
-                                <span>Aerobic Endurance</span>
-                            </label>
-                        </div>
-                        <div class="checkbox-option">
-                            <input type="checkbox" name="goals" id="speed" value="speed">
-                            <label for="speed" class="checkbox-label">
-                                <i class="bi bi-speedometer2"></i>
-                                <span>Speed/Power</span>
-                            </label>
-                        </div>
-                        <div class="checkbox-option">
-                            <input type="checkbox" name="goals" id="strength" value="strength">
-                            <label for="strength" class="checkbox-label">
-                                <i class="bi bi-activity"></i>
-                                <span>Strength</span>
-                            </label>
-                        </div>
-                        <div class="checkbox-option">
-                            <input type="checkbox" name="goals" id="flexibility" value="flexibility">
-                            <label for="flexibility" class="checkbox-label">
-                                <i class="bi bi-bounding-box"></i>
-                                <span>Mobility/Flexibility</span>
-                            </label>
-                        </div>
-                        <div class="checkbox-option">
-                            <input type="checkbox" name="goals" id="technique" value="technique">
-                            <label for="technique" class="checkbox-label">
-                                <i class="bi bi-gear"></i>
-                                <span>Skill Development</span>
-                            </label>
-                        </div>
-                        <div class="checkbox-option">
-                            <input type="checkbox" name="goals" id="recovery" value="recovery">
-                            <label for="recovery" class="checkbox-label">
-                                <i class="bi bi-cloud-moon"></i>
-                                <span>Recovery</span>
-                            </label>
-                        </div>
-                        <div class="checkbox-option">
-                            <input type="checkbox" name="goals" id="injury_prevention" value="injury_prevention">
-                            <label for="injury_prevention" class="checkbox-label">
-                                <i class="bi bi-shield-check"></i>
-                                <span>Injury Prevention</span>
-                            </label>
-                        </div>
-                        <div class="checkbox-option">
-                            <input type="checkbox" name="goals" id="competition_prep" value="competition_prep">
-                            <label for="competition_prep" class="checkbox-label">
-                                <i class="bi bi-calendar-event"></i>
-                                <span>Competition Prep</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Training Periodization -->
-            <div class="form-section">
-                <div class="section-header">
-                    <i class="bi bi-calendar-range"></i>
-                    <h3>Training Timeline</h3>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="plan_duration"><i class="bi bi-calendar-week"></i> Plan Duration</label>
-                        <select name="plan_duration" id="plan_duration">
-                            <option value="4">4 Weeks (Microcycle)</option>
-                            <option value="8" selected>8 Weeks (Mesocycle)</option>
-                            <option value="12">12 Weeks (Macrocycle)</option>
-                            <option value="16">16 Weeks (Full Season)</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="start_date"><i class="bi bi-calendar-check"></i> Target Start Date</label>
-                        <input type="date" name="start_date" id="start_date">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="competition_date"><i class="bi bi-flag"></i> Key Competition Date (if applicable)</label>
-                    <input type="date" name="competition_date" id="competition_date">
-                </div>
-            </div>
-
-            <!-- Coaching Preferences -->
-            <div class="form-section">
-                <div class="section-header">
-                    <i class="bi bi-sliders"></i>
-                    <h3>Coaching Preferences</h3>
-                </div>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label for="motivational_style"><i class="bi bi-chat-left-text"></i> Coaching Style</label>
-                        <select name="motivational_style" id="motivational_style">
-                            <option value="encouraging">Encouraging & Supportive</option>
-                            <option value="technical" selected>Technical & Detailed</option>
-                            <option value="tough_love">Tough Love & Challenging</option>
-                            <option value="balanced">Balanced Approach</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="length"><i class="bi bi-text-paragraph"></i> Plan Detail Level</label>
-                        <select name="length" id="length">
-                            <option value="short">Concise Summary</option>
-                            <option value="medium" selected>Moderate Detail</option>
-                            <option value="detailed">Comprehensive Plan</option>
-                        </select>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Additional Notes -->
-            <div class="form-section">
-                <div class="section-header">
-                    <i class="bi bi-journal-text"></i>
-                    <h3>Additional Information</h3>
-                </div>
-                <div class="form-group">
-                    <label for="injuries"><i class="bi bi-heart-pulse"></i> Current/Previous Injuries</label>
-                    <textarea name="injuries" id="injuries" rows="2" placeholder="Describe any injuries or physical limitations"></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="equipment"><i class="bi bi-tools"></i> Available Equipment</label>
-                    <textarea name="equipment" id="equipment" rows="2" placeholder="List equipment you have access to (gym, pool, track, etc.)"></textarea>
-                </div>
-            </div>
-
-            <!-- Submit Button -->
-            <div class="form-actions">
-                <button type="submit" class="submit-btn athlete-submit">
-                    <i class="bi bi-graph-up-arrow me-2"></i> Generate Performance Plan
-                </button>
-                <div class="form-note">
-                    <i class="bi bi-lock"></i> Your data is secure and will only be used to create your training plan
-                </div>
-            </div>
-        </form>
     </div>
 </div>
 
-<!-- Bootstrap Icons -->
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+<!-- Main Form Container -->
+<div class="form-container">
+    <div class="form-header">
+        <div class="form-header-icon">
+            <i class="bi bi-clipboard2-pulse"></i>
+        </div>
+        <h2>Create Your Performance Plan</h2>
+        <p class="form-subtitle">Get a customized training regimen tailored to your sport, competition level, and physiological metrics</p>
+    </div>
 
-<!-- Form Validation Script -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages mb-4">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ 'danger' if category == 'error' else category }} alert-dismissible fade show">
+                        <div class="d-flex align-items-center">
+                            <i class="bi bi-{% if category == 'success' %}check-circle{% elif category == 'error' %}exclamation-triangle{% else %}info-circle{% endif %} me-2"></i>
+                            {{ message }}
+                        </div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    <form method="POST" class="athlete-form-content">
+        <!-- Athlete Profile Section -->
+        <div class="form-section athlete-profile">
+            <div class="section-header">
+                <i class="bi bi-person-vcard"></i>
+                <h3>Athlete Profile</h3>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name"><i class="bi bi-person"></i> Full Name</label>
+                    <input type="text" name="name" id="name" placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label for="age"><i class="bi bi-calendar"></i> Age</label>
+                    <input type="number" name="age" id="age" min="12" max="99" placeholder="Age in years">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="gender"><i class="bi bi-gender-ambiguous"></i> Gender</label>
+                    <select name="gender" id="gender">
+                        <option value="" disabled selected>Select gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="weight"><i class="bi bi-speedometer"></i> Weight (kg)</label>
+                    <input type="number" name="weight" id="weight" min="30" max="200" placeholder="Weight in kg">
+                </div>
+            </div>
+        </div>
+
+        <!-- Sport Selection -->
+        <div class="form-section">
+            <div class="section-header">
+                <i class="bi bi-trophy"></i>
+                <h3>Sport Specialization</h3>
+            </div>
+            <div class="form-group">
+                <label for="sport"><i class="bi bi-heart-pulse"></i> Primary Sport *</label>
+                <select name="sport" id="sport" required>
+                    <option value="" disabled selected>Select your sport</option>
+                    <option value="running">🏃‍♂️ Running (Track/XC)</option>
+                    <option value="swimming">🏊‍♂️ Swimming</option>
+                    <option value="cycling">🚴‍♂️ Cycling</option>
+                    <option value="weight_training">🏋️‍♂️ Weight Training</option>
+                    <option value="triathlon">🏊‍♂️🚴‍♂️🏃‍♂️ Triathlon</option>
+                    <option value="basketball">🏀 Basketball</option>
+                    <option value="soccer">⚽ Soccer</option>
+                    <option value="tennis">🎾 Tennis</option>
+                    <option value="volleyball">🏐 Volleyball</option>
+                    <option value="gymnastics">🤸‍♂️ Gymnastics</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="position"><i class="bi bi-geo-alt"></i> Position/Role (if applicable)</label>
+                <input type="text" name="position" id="position" placeholder="e.g., Point Guard, Midfielder, Sprinter">
+            </div>
+        </div>
+
+        <!-- Performance Level -->
+        <div class="form-section">
+            <div class="section-header">
+                <i class="bi bi-graph-up-arrow"></i>
+                <h3>Performance Level</h3>
+            </div>
+            <div class="form-group">
+                <label><i class="bi bi-bar-chart-steps"></i> Current Competition Level *</label>
+                <div class="radio-group performance-levels">
+                    <div class="radio-option">
+                        <input type="radio" name="level" id="beginner" value="beginner" required>
+                        <label for="beginner" class="radio-label">
+                            <div class="level-icon"><i class="bi bi-1-circle"></i></div>
+                            <div class="level-content">
+                                <span class="level-title">High School</span>
+                                <span class="level-desc">Competing at school/club level</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="level" id="intermediate" value="intermediate">
+                        <label for="intermediate" class="radio-label">
+                            <div class="level-icon"><i class="bi bi-2-circle"></i></div>
+                            <div class="level-content">
+                                <span class="level-title">Collegiate</span>
+                                <span class="level-desc">Competing at university level</span>
+                            </div>
+                        </label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" name="level" id="advanced" value="advanced">
+                        <label for="advanced" class="radio-label">
+                            <div class="level-icon"><i class="bi bi-3-circle"></i></div>
+                            <div class="level-content">
+                                <span class="level-title">Elite</span>
+                                <span class="level-desc">National/International competition</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Training Metrics -->
+        <div class="form-section">
+            <div class="section-header">
+                <i class="bi bi-clipboard2-data"></i>
+                <h3>Performance Metrics</h3>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="training_hours"><i class="bi bi-clock-history"></i> Weekly Training Hours</label>
+                    <input type="number" name="training_hours" id="training_hours" min="1" max="40" placeholder="Hours per week">
+                </div>
+                <div class="form-group">
+                    <label for="rest_days"><i class="bi bi-cloud-moon"></i> Rest Days Per Week</label>
+                    <input type="number" name="rest_days" id="rest_days" min="0" max="7" placeholder="Rest days">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="performance_goal"><i class="bi bi-bullseye"></i> Specific Performance Goal</label>
+                <textarea name="performance_goal" id="performance_goal" rows="3" placeholder="e.g., Run 5k under 18 minutes, Increase vertical jump by 4 inches, Break personal record..."></textarea>
+            </div>
+        </div>
+
+        <!-- Training Goals -->
+        <div class="form-section">
+            <div class="section-header">
+                <i class="bi bi-bullseye"></i>
+                <h3>Training Priorities</h3>
+            </div>
+            <div class="form-group">
+                <label><i class="bi bi-check2-square"></i> Select your focus areas (Choose 2-3) *</label>
+                <div class="checkbox-grid performance-goals">
+                    <div class="checkbox-option">
+                        <input type="checkbox" name="goals" id="endurance" value="endurance">
+                        <label for="endurance" class="checkbox-label">
+                            <i class="bi bi-lightning"></i>
+                            <span>Aerobic Endurance</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" name="goals" id="speed" value="speed">
+                        <label for="speed" class="checkbox-label">
+                            <i class="bi bi-speedometer2"></i>
+                            <span>Speed/Power</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" name="goals" id="strength" value="strength">
+                        <label for="strength" class="checkbox-label">
+                            <i class="bi bi-activity"></i>
+                            <span>Strength</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" name="goals" id="flexibility" value="flexibility">
+                        <label for="flexibility" class="checkbox-label">
+                            <i class="bi bi-bounding-box"></i>
+                            <span>Mobility/Flexibility</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" name="goals" id="technique" value="technique">
+                        <label for="technique" class="checkbox-label">
+                            <i class="bi bi-gear"></i>
+                            <span>Skill Development</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" name="goals" id="recovery" value="recovery">
+                        <label for="recovery" class="checkbox-label">
+                            <i class="bi bi-cloud-moon"></i>
+                            <span>Recovery</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" name="goals" id="injury_prevention" value="injury_prevention">
+                        <label for="injury_prevention" class="checkbox-label">
+                            <i class="bi bi-shield-check"></i>
+                            <span>Injury Prevention</span>
+                        </label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" name="goals" id="competition_prep" value="competition_prep">
+                        <label for="competition_prep" class="checkbox-label">
+                            <i class="bi bi-calendar-event"></i>
+                            <span>Competition Prep</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Training Periodization -->
+        <div class="form-section">
+            <div class="section-header">
+                <i class="bi bi-calendar-range"></i>
+                <h3>Training Timeline</h3>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="plan_duration"><i class="bi bi-calendar-week"></i> Plan Duration</label>
+                    <select name="plan_duration" id="plan_duration">
+                        <option value="4">4 Weeks (Microcycle)</option>
+                        <option value="8" selected>8 Weeks (Mesocycle)</option>
+                        <option value="12">12 Weeks (Macrocycle)</option>
+                        <option value="16">16 Weeks (Full Season)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="start_date"><i class="bi bi-calendar-check"></i> Target Start Date</label>
+                    <input type="date" name="start_date" id="start_date">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="competition_date"><i class="bi bi-flag"></i> Key Competition Date (if applicable)</label>
+                <input type="date" name="competition_date" id="competition_date">
+            </div>
+        </div>
+
+        <!-- Coaching Preferences -->
+        <div class="form-section">
+            <div class="section-header">
+                <i class="bi bi-sliders"></i>
+                <h3>Coaching Preferences</h3>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="motivational_style"><i class="bi bi-chat-left-text"></i> Coaching Style</label>
+                    <select name="motivational_style" id="motivational_style">
+                        <option value="encouraging">🤗 Encouraging & Supportive</option>
+                        <option value="technical" selected>📊 Technical & Detailed</option>
+                        <option value="tough_love">💪 Tough Love & Challenging</option>
+                        <option value="balanced">⚖️ Balanced Approach</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="length"><i class="bi bi-text-paragraph"></i> Plan Detail Level</label>
+                    <select name="length" id="length">
+                        <option value="short">📝 Concise Summary</option>
+                        <option value="medium" selected>📄 Moderate Detail</option>
+                        <option value="detailed">📋 Comprehensive Plan</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Notes -->
+        <div class="form-section">
+            <div class="section-header">
+                <i class="bi bi-journal-text"></i>
+                <h3>Additional Information</h3>
+            </div>
+            <div class="form-group">
+                <label for="injuries"><i class="bi bi-heart-pulse"></i> Current/Previous Injuries</label>
+                <textarea name="injuries" id="injuries" rows="3" placeholder="Describe any injuries or physical limitations that should be considered in your training plan"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="equipment"><i class="bi bi-tools"></i> Available Equipment</label>
+                <textarea name="equipment" id="equipment" rows="3" placeholder="List equipment you have access to (gym, pool, track, weights, cardio machines, etc.)"></textarea>
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="form-actions">
+            <button type="submit" class="submit-btn">
+                <i class="bi bi-rocket-takeoff me-2"></i>
+                Generate Performance Plan
+            </button>
+            <div class="form-note">
+                <i class="bi bi-shield-lock"></i>
+                Your data is secure and will only be used to create your personalized training plan
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- Enhanced Form Validation Script -->
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.querySelector('form');
     const goals = document.querySelectorAll('input[name="goals"]');
+    const submitBtn = document.querySelector('.submit-btn');
     const maxGoals = 3;
     
+    // Set default start date to today
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('start_date').value = today;
+    
+    // Enhanced form validation
     form.addEventListener('submit', function(event) {
-        // Validate required fields
         const sport = document.getElementById('sport');
         const level = document.querySelector('input[name="level"]:checked');
         const selectedGoals = document.querySelectorAll('input[name="goals"]:checked');
         
         let isValid = true;
+        let errors = [];
         
         // Reset error states
         document.querySelectorAll('.error-highlight').forEach(el => el.classList.remove('error-highlight'));
         
+        // Validate sport
         if (!sport.value) {
             sport.classList.add('error-highlight');
+            errors.push('Please select your primary sport');
             isValid = false;
         }
         
+        // Validate performance level
         if (!level) {
             document.querySelectorAll('.radio-option').forEach(el => el.classList.add('error-highlight'));
+            errors.push('Please select your performance level');
             isValid = false;
         }
         
+        // Validate training goals
         if (selectedGoals.length === 0) {
             document.querySelector('.checkbox-grid').classList.add('error-highlight');
+            errors.push('Please select at least one training priority');
             isValid = false;
         }
         
         if (!isValid) {
             event.preventDefault();
             
-            // Show error message
-            const flashDiv = document.createElement('div');
-            flashDiv.className = 'flash flash-error';
-            flashDiv.innerHTML = `
-                <div class="flash-icon"><i class="bi bi-exclamation-triangle"></i></div>
-                Please complete all required fields (sport, level, and at least one training priority)
-            `;
+            // Show consolidated error message
+            showErrorMessage(errors.join(', '));
             
-            const flashContainer = document.querySelector('.flash-messages') || document.createElement('div');
-            if (!document.querySelector('.flash-messages')) {
-                flashContainer.className = 'flash-messages';
-                form.prepend(flashContainer);
+            // Scroll to first error
+            const firstError = document.querySelector('.error-highlight');
+            if (firstError) {
+                firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
-            
-            flashContainer.prepend(flashDiv);
-            
-            // Scroll to error
-            flashDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+            // Show loading state
+            submitBtn.classList.add('loading');
+            submitBtn.innerHTML = '<i class="bi bi-arrow-clockwise me-2"></i>Creating Your Plan...';
+            submitBtn.disabled = true;
         }
     });
     
-    // Limit number of selected goals
+    // Goal selection validation
     goals.forEach(goal => {
         goal.addEventListener('change', function() {
             const checked = document.querySelectorAll('input[name="goals"]:checked');
             if (checked.length > maxGoals) {
                 this.checked = false;
-                
-                // Show warning
-                const flashDiv = document.createElement('div');
-                flashDiv.className = 'flash flash-warning';
-                flashDiv.innerHTML = `
-                    <div class="flash-icon"><i class="bi bi-info-circle"></i></div>
-                    For optimal focus, please select no more than ${maxGoals} priority areas
-                `;
-                
-                const flashContainer = document.querySelector('.flash-messages') || document.createElement('div');
-                if (!document.querySelector('.flash-messages')) {
-                    flashContainer.className = 'flash-messages';
-                    form.prepend(flashContainer);
-                }
-                
-                flashContainer.prepend(flashDiv);
-                
-                // Auto-dismiss after 3 seconds
-                setTimeout(() => {
-                    flashDiv.remove();
-                }, 3000);
+                showWarningMessage(`For optimal focus, please select no more than ${maxGoals} priority areas`);
             }
         });
     });
@@ -428,238 +934,76 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Set default start date to today
-    const today = new Date().toISOString().split('T')[0];
-    document.getElementById('start_date').value = today;
+    // Enhanced message display functions
+    function showErrorMessage(message) {
+        showMessage(message, 'danger');
+    }
+    
+    function showWarningMessage(message) {
+        showMessage(message, 'warning');
+    }
+    
+    function showMessage(message, type) {
+        const existingAlert = document.querySelector('.flash-messages .alert');
+        if (existingAlert) {
+            existingAlert.remove();
+        }
+        
+        const alertDiv = document.createElement('div');
+        alertDiv.className = `alert alert-${type} alert-dismissible fade show`;
+        alertDiv.innerHTML = `
+            <div class="d-flex align-items-center">
+                <i class="bi bi-${type === 'danger' ? 'exclamation-triangle' : 'info-circle'} me-2"></i>
+                ${message}
+            </div>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        `;
+        
+        let flashContainer = document.querySelector('.flash-messages');
+        if (!flashContainer) {
+            flashContainer = document.createElement('div');
+            flashContainer.className = 'flash-messages mb-4';
+            form.prepend(flashContainer);
+        }
+        
+        flashContainer.prepend(alertDiv);
+        
+        // Auto-dismiss warning messages
+        if (type === 'warning') {
+            setTimeout(() => {
+                alertDiv.style.transition = 'all 0.5s ease-out';
+                alertDiv.style.transform = 'translateX(100%)';
+                alertDiv.style.opacity = '0';
+                setTimeout(() => alertDiv.remove(), 500);
+            }, 4000);
+        }
+        
+        // Scroll to message
+        alertDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+    
+    // Add smooth animations to form sections
+    const observerOptions = {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+            }
+        });
+    }, observerOptions);
+    
+    document.querySelectorAll('.form-section').forEach((section, index) => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(20px)';
+        section.style.transition = `all 0.6s ease ${index * 0.1}s`;
+        observer.observe(section);
+    });
 });
 </script>
 
-<style>
-/* Add these styles to your CSS file */
-.athlete-hero {
-    background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-    color: white;
-    padding: 3rem 1rem;
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.athlete-hero h1 {
-    font-size: 2.5rem;
-    font-weight: 700;
-    margin-bottom: 0.5rem;
-}
-
-.athlete-hero .subtitle {
-    font-size: 1.2rem;
-    opacity: 0.9;
-}
-
-.athlete-form {
-    max-width: 900px;
-    margin: 0 auto;
-    padding: 2rem;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-}
-
-.form-header {
-    text-align: center;
-    margin-bottom: 2rem;
-}
-
-.header-icon {
-    font-size: 2.5rem;
-    color: #1a2a6c;
-    margin-bottom: 1rem;
-}
-
-.form-header h2 {
-    font-size: 1.8rem;
-    color: #333;
-    margin-bottom: 0.5rem;
-}
-
-.form-subtitle {
-    color: #666;
-    font-size: 1rem;
-}
-
-.form-section {
-    margin-bottom: 2rem;
-    padding-bottom: 1.5rem;
-    border-bottom: 1px solid #eee;
-}
-
-.section-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1.5rem;
-}
-
-.section-header i {
-    font-size: 1.5rem;
-    margin-right: 0.75rem;
-    color: #1a2a6c;
-}
-
-.section-header h3 {
-    font-size: 1.3rem;
-    color: #333;
-    margin: 0;
-}
-
-.form-row {
-    display: flex;
-    gap: 1.5rem;
-    margin-bottom: 1rem;
-}
-
-.form-row .form-group {
-    flex: 1;
-}
-
-.form-group label {
-    display: block;
-    margin-bottom: 0.5rem;
-    font-weight: 600;
-    color: #444;
-}
-
-.form-group label i {
-    margin-right: 0.5rem;
-    color: #1a2a6c;
-}
-
-.athlete-select, 
-input[type="text"],
-input[type="number"],
-input[type="date"],
-select,
-textarea {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    font-size: 1rem;
-    transition: border-color 0.3s;
-}
-
-.athlete-select:focus,
-input:focus,
-select:focus,
-textarea:focus {
-    border-color: #1a2a6c;
-    outline: none;
-}
-
-.performance-levels .radio-option {
-    margin-bottom: 0.75rem;
-}
-
-.radio-label, .checkbox-label {
-    display: flex;
-    align-items: center;
-    padding: 1rem;
-    border-radius: 6px;
-    background: #f9f9f9;
-    cursor: pointer;
-    transition: all 0.2s;
-}
-
-.radio-label:hover, .checkbox-label:hover {
-    background: #f0f0f0;
-}
-
-.level-icon {
-    font-size: 1.5rem;
-    margin-right: 1rem;
-    color: #1a2a6c;
-}
-
-.level-content {
-    display: flex;
-    flex-direction: column;
-}
-
-.level-title {
-    font-weight: 600;
-    color: #333;
-}
-
-.level-desc {
-    font-size: 0.85rem;
-    color: #666;
-}
-
-.checkbox-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 0.75rem;
-}
-
-.checkbox-label {
-    display: flex;
-    align-items: center;
-    padding: 0.75rem;
-}
-
-.checkbox-label i {
-    margin-right: 0.75rem;
-    font-size: 1.2rem;
-    color: #1a2a6c;
-}
-
-.form-actions {
-    text-align: center;
-    margin-top: 2rem;
-}
-
-.submit-btn {
-    background: linear-gradient(to right, #1a2a6c, #b21f1f);
-    color: white;
-    border: none;
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
-    font-weight: 600;
-    border-radius: 50px;
-    cursor: pointer;
-    transition: all 0.3s;
-    display: inline-flex;
-    align-items: center;
-}
-
-.submit-btn:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-}
-
-.form-note {
-    margin-top: 1rem;
-    font-size: 0.85rem;
-    color: #666;
-}
-
-.form-note i {
-    margin-right: 0.3rem;
-}
-
-.error-highlight {
-    border-color: #dc3545 !important;
-    box-shadow: 0 0 0 0.2rem rgba(220,53,69,.25);
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-    .form-row {
-        flex-direction: column;
-        gap: 1rem;
-    }
-    
-    .checkbox-grid {
-        grid-template-columns: 1fr;
-    }
-}
-</style>
 {% endblock %}
