@@ -652,3 +652,101 @@ select:focus, input:focus, textarea:focus {
 .coaching-plan > p:nth-child(2) { animation-delay: 0.3s; }
 .coaching-plan > h4:nth-child(3) { animation-delay: 0.5s; }
 .coaching-plan > p:nth-child(4) { animation-delay: 0.7s; }
+
+
+/* Coaching Plan Styles */
+.coaching-plan {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.8;
+    color: #333;
+}
+
+.plan-header {
+    text-align: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.plan-header h2 {
+    font-weight: 800;
+    color: var(--primary-color);
+    margin-bottom: 0.5rem;
+}
+
+.plan-header h3 {
+    font-weight: 600;
+    color: var(--dark-color);
+}
+
+.motivation-section, 
+.weekly-plan, 
+.technical-section, 
+.recovery-section {
+    margin-bottom: 3rem;
+    padding: 1.5rem;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+}
+
+.week-section {
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: rgba(248, 250, 252, 0.8);
+    border-radius: var(--border-radius);
+}
+
+.coaching-plan h4 {
+    color: var(--primary-color);
+    font-weight: 700;
+    margin: 1.5rem 0 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #eee;
+}
+
+.coaching-plan h5 {
+    font-weight: 600;
+    color: var(--dark-color);
+    margin: 1rem 0;
+}
+
+.coaching-plan strong {
+    color: var(--primary-color);
+    font-weight: 600;
+}
+
+.coaching-plan p {
+    margin-bottom: 1rem;
+}
+
+/* Sport-specific backgrounds */
+.running-plan .weekly-plan {
+    border-left: 4px solid #4a6fa5;
+}
+
+.swimming-plan .weekly-plan {
+    border-left: 4px solid #4cb8c4;
+}
+
+.cycling-plan .technical-section {
+    border-left: 4px solid #ff7e5f;
+}
+
+.weight_training-plan .recovery-section {
+    border-left: 4px solid #6c757d;
+}
+
+/* Level-specific colors */
+.beginner-level .plan-header {
+    background: rgba(74, 111, 165, 0.1);
+}
+
+.intermediate-level .plan-header {
+    background: rgba(76, 184, 196, 0.1);
+}
+
+.advanced-level .plan-header {
+    background: rgba(255, 126, 95, 0.1);
+}
+
