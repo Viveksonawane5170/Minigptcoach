@@ -74,7 +74,9 @@ def generate_coaching_prompt(user_profile):
         <div class='technical-section'>
         <h4>Technical Excellence</h4>
         <p><strong>Key Drill:</strong> [Specific drill with step-by-step instructions]</p>
-        <p><strong>Form Focus:</strong> [Detailed technical breakdown with common mistakes to avoid]</p>
+        <p><strong>Game-Specific Techniques:</strong> [3-5 sport-specific technical tips for in-game situations]</p>
+        <p><strong>Tactical Insights:</strong> [Positioning strategies and decision-making guidance]</p>
+        <p><strong>Common Mistakes:</strong> [Frequent errors and how to correct them]</p>
         <p><strong>Equipment Optimization:</strong> [Specific guidance on gear selection and usage]</p>
         </div>
 
@@ -100,6 +102,12 @@ def generate_coaching_prompt(user_profile):
         - Progressive overload principles
         - Periodization details
         - Sport-specific technical cues
+        
+        For the Technical Excellence section:
+        - Provide 3-5 specific game techniques relevant to {user_profile['sport']}
+        - Include tactical positioning advice for different game situations
+        - List common mistakes and their corrections
+        - Add sport-specific equipment tips
         """
         
         response = model.generate_content(prompt)
@@ -133,7 +141,39 @@ def format_response(response, user_profile):
     """
 
 def generate_fallback_response(user_profile):
-    """Structured fallback response"""
+    """Structured fallback response with enhanced technical section"""
+    sport = user_profile['sport'].lower()
+    technical_tips = {
+        'basketball': [
+            "Triple threat positioning: Always be ready to shoot, pass, or dribble",
+            "Defensive stance: Stay low with wide base and active hands",
+            "Boxing out: Seal defenders immediately after shot release"
+        ],
+        'soccer': [
+            "First touch: Direct ball away from pressure into space",
+            "Body positioning: Shield ball using arm and body awareness",
+            "Passing lanes: Cut angles with proper positioning"
+        ],
+        'tennis': [
+            "Split step: Time your jump with opponent's contact",
+            "Court positioning: Recover to center after each shot",
+            "Shot selection: Choose high-percentage shots based on position"
+        ],
+        'swimming': [
+            "Streamlining: Tight core and extended arms off walls",
+            "Breathing timing: Exhale underwater, quick inhale",
+            "Pace judgment: Negative split race strategy"
+        ],
+        'default': [
+            "Anticipation: Read opponent's body language early",
+            "Efficient movement: Minimize unnecessary steps",
+            "Situational awareness: Understand game context at all times"
+        ]
+    }
+    
+    tips = technical_tips.get(sport, technical_tips['default'])
+    tips_html = "".join([f"<li>{tip}</li>" for tip in tips])
+    
     return f"""
     <div class='coaching-plan'>
         <div class='plan-header'>
@@ -155,15 +195,19 @@ def generate_fallback_response(user_profile):
         </div>
         
         <div class='technical-section'>
-            <h4>Fundamentals</h4>
-            <p>Focus on proper form and gradual intensity increases</p>
-            <p><strong>Weekly Progression:</strong> Increase workload 5-10% weekly</p>
+            <h4>Technical Excellence</h4>
+            <p><strong>Key Drill:</strong> Sport-specific fundamental drill</p>
+            <p><strong>Game-Specific Techniques:</strong></p>
+            <ul>{tips_html}</ul>
+            <p><strong>Tactical Insights:</strong> Position yourself according to game situation</p>
+            <p><strong>Common Mistakes:</strong> Avoid overcomplicating plays under pressure</p>
+            <p><strong>Equipment Optimization:</strong> Ensure proper gear fit and maintenance</p>
         </div>
         
         <div class='recovery-section'>
             <h4>Recovery Protocol</h4>
-            <p><strong>Daily:</strong> 8 hours sleep, hydration</p>
-            <p><strong>Post-workout:</strong> Protein + carb within 30 minutes</p>
+            <p><strong>Daily:</strong> 8 hours sleep, hydration (35ml/kg body weight)</p>
+            <p><strong>Post-workout:</strong> 3:1 carb-to-protein ratio within 30 minutes</p>
         </div>
     </div>
     """
