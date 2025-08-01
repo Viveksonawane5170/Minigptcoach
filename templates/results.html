@@ -264,17 +264,35 @@
                 <div>
                     <h2>Your Performance Blueprint</h2>
                     <h3 class="mb-2">
-                        <i class="bi sport-icon 
-                        {% if sport_name == 'Running' %}bi-speedometer2
-                        {% elif sport_name == 'Swimming' %}bi-water
-                        {% elif sport_name == 'Cycling' %}bi-bicycle
-                        {% elif sport_name == 'Weight Training' %}bi-activity
-                        {% elif sport_name == 'Basketball' %}bi-basket
-                        {% elif sport_name == 'Soccer' %}bi-ball
-                        {% elif sport_name == 'Tennis' %}bi-tennis-ball
-                        {% elif sport_name == 'Volleyball' %}bi-volleyball
-                        {% elif sport_name == 'Gymnastics' %}bi-star
-                        {% else %}bi-trophy{% endif %} me-2"></i>
+                       <!-- Update the sport icon section to include new sports -->
+                            <i class="bi sport-icon 
+                            {% if sport_name == 'Running' %}bi-speedometer2
+                            {% elif sport_name == 'Swimming' %}bi-water
+                            {% elif sport_name == 'Cycling' %}bi-bicycle
+                            {% elif sport_name == 'Weight Training' %}bi-activity
+                            {% elif sport_name == 'Basketball' %}bi-basket
+                            {% elif sport_name == 'Soccer' %}bi-ball
+                            {% elif sport_name == 'Tennis' %}bi-tennis-ball
+                            {% elif sport_name == 'Volleyball' %}bi-volleyball
+                            {% elif sport_name == 'Gymnastics' %}bi-star
+                            {% elif sport_name == 'Cricket' %}bi-bat
+                            {% elif sport_name == 'Baseball' %}bi-baseball
+                            {% elif sport_name == 'American Football' %}bi-helmet
+                            {% elif sport_name == 'Rugby' %}bi-rugby
+                            {% elif sport_name == 'Badminton' %}bi-bird
+                            {% elif sport_name == 'Table Tennis' %}bi-table-tennis
+                            {% elif sport_name == 'Golf' %}bi-golf
+                            {% elif sport_name == 'Hockey' %}bi-hockey
+                            {% elif sport_name == 'Ice Hockey' %}bi-ice-hockey
+                            {% elif sport_name == 'Boxing' %}bi-boxing
+                            {% elif sport_name == 'Martial Arts' %}bi-martial-arts
+                            {% elif sport_name == 'Skiing' %}bi-skiing
+                            {% elif sport_name == 'Snowboarding' %}bi-snowboarding
+                            {% elif sport_name == 'Surfing' %}bi-surfing
+                            {% elif sport_name == 'Rowing' %}bi-rowing
+                            {% elif sport_name == 'Archery' %}bi-archery
+                            {% elif sport_name == 'Fencing' %}bi-fencing
+                            {% else %}bi-trophy{% endif %} me-2"></i>
                         {{sport_name}} Mastery Plan
                     </h3>
                     <p class="mb-0">Customized for {{level}} athletes focusing on: {{goals|join(', ')}}</p>

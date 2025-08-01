@@ -600,6 +600,91 @@ select:focus, input:focus, textarea:focus {
     border-left: 6px solid #6c757d;
     background-color: rgba(108, 117, 125, 0.03);
 }
+/* Add these to your existing sport-specific styling section */
+.cricket-plan {
+    border-left: 6px solid #e67e22;
+    background-color: rgba(230, 126, 34, 0.03);
+}
+
+.baseball-plan {
+    border-left: 6px solid #e74c3c;
+    background-color: rgba(231, 76, 60, 0.03);
+}
+
+.american_football-plan {
+    border-left: 6px solid #8e44ad;
+    background-color: rgba(142, 68, 173, 0.03);
+}
+
+.rugby-plan {
+    border-left: 6px solid #16a085;
+    background-color: rgba(22, 160, 133, 0.03);
+}
+
+.badminton-plan {
+    border-left: 6px solid #f39c12;
+    background-color: rgba(243, 156, 18, 0.03);
+}
+
+.table_tennis-plan {
+    border-left: 6px solid #d35400;
+    background-color: rgba(211, 84, 0, 0.03);
+}
+
+.golf-plan {
+    border-left: 6px solid #27ae60;
+    background-color: rgba(39, 174, 96, 0.03);
+}
+
+.hockey-plan {
+    border-left: 6px solid #2980b9;
+    background-color: rgba(41, 128, 185, 0.03);
+}
+
+.ice_hockey-plan {
+    border-left: 6px solid #3498db;
+    background-color: rgba(52, 152, 219, 0.03);
+}
+
+.boxing-plan {
+    border-left: 6px solid #c0392b;
+    background-color: rgba(192, 57, 43, 0.03);
+}
+
+.martial_arts-plan {
+    border-left: 6px solid #9b59b6;
+    background-color: rgba(155, 89, 182, 0.03);
+}
+
+.skiing-plan {
+    border-left: 6px solid #1abc9c;
+    background-color: rgba(26, 188, 156, 0.03);
+}
+
+.snowboarding-plan {
+    border-left: 6px solid #34495e;
+    background-color: rgba(52, 73, 94, 0.03);
+}
+
+.surfing-plan {
+    border-left: 6px solid #3498db;
+    background-color: rgba(52, 152, 219, 0.03);
+}
+
+.rowing-plan {
+    border-left: 6px solid #16a085;
+    background-color: rgba(22, 160, 133, 0.03);
+}
+
+.archery-plan {
+    border-left: 6px solid #d35400;
+    background-color: rgba(211, 84, 0, 0.03);
+}
+
+.fencing-plan {
+    border-left: 6px solid #7f8c8d;
+    background-color: rgba(127, 140, 141, 0.03);
+}
 
 /* Level-specific styling */
 .beginner-level {
